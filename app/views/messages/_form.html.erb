@@ -1,0 +1,28 @@
+<% if user_signed_in? %>
+  <%= form_for(@message, :remote => true) do |f| %>
+    <div class="field">
+      <%= f.text_field :comment, :class=>"span4", :placeholder=>@room.name %>
+    </div>
+    <%= f.hidden_field :room_id %>
+    <%= f.hidden_field :reply_to %>
+    <input type="hidden" name="channel" value="broadcast" />
+    <!-- div class="actions">
+      <%= f.submit %>
+    </div -->
+
+    <% if @message.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@message.errors.count, "error") %> prohibited this message from being saved:</h2>
+
+        <ul>
+        <% @message.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+  <% end %>
+<% else %>
+  Login to comment
+<% end %>

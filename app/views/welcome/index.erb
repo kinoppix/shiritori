@@ -1,0 +1,47 @@
+<!-- Main hero unit for a primary marketing message or call to action -->
+<div class="well well-small">
+  <h1>Shower Demo</h1>
+  <p>Shower(シャワー)とは、リアルタイムコミュニケーションに使えるpub/subサーバーです。これを使うと、たとえば同じコンテンツを開いている人に同時にメッセージを送ることができたりするようになります。<br />Shower is an instant pub/sub server. For instance, it can notify messages for all people opening the same content. See the demo and learn how to it works.</p>
+</div>
+
+<!-- Example row of columns -->
+<div class="row-fluid">
+  <div class="span4">
+    <h4>Namespaced pub/sub</h4>
+     <p>Showerサーバーに接続するときに、部屋分けのように名前空間とチャンネルを指定できます。裏側の通知APIを叩くと、指定された名前空間とチャンネルに対して通知される仕組み。<br />Connect to Shower server with specifying namespace and channel. Namespace and channel are room for pub/sub. When an inner publishing API is called, the server notifies for specified namespace and channel.</p>
+  </div>
+  <div class="span4">
+    <h4>Realtime</h4>
+     <p>WebSocketで接続するからポーリングと比べて一瞬で通知されます。WebSocket非対応ブラウザはXMLSocketやポーリングでリアルタイムっぽく動作します。<br />Shower supports WebSocket that enables realtime notification. As for a WebSocket unsupported browser, it pretends realtime using XMLSocket or HTTP polling.</p>
+ </div>
+  <div class="span4">
+    <h4>Lightweight</h4>
+    <p>node.jsを採用しているからC10K問題もクリア＆低消費メモリ。ミドルウェアはnode.jsとredisのみです。多分数万クライアントで使えるはずなんだけど、ベンチマークをしていないから誰か助けて。<br />Shower clears C10K problem and consumes lower memory with the help of node.js. Used middlewares are only node.js and redis. Although it works faster, I haven't finished benchmarking. Please help me!</p>
+  </div>
+</div>
+
+<hr>
+
+<div class="row">
+  <% @rooms.each do |room| %>
+    <div class="span3">
+      <h3><%= link_to room.name, {:controller => :rooms, :action => :show, :id => room.id}, :class=> "" %></h3>
+       <pre style="position:relative; overflow-y:hidden; max-height:3.4em">
+         <div id="shower_room<%= room.id %>" style="position:absolute; bottom:0;"></div>
+       </pre>
+    </div>
+    <script>
+      (function(){
+        room_id = 'room'+'<%= room.id %>';
+        socket<%= room.id %> = io.connect(shower + room_id);
+        socket<%= room.id %>.on('broadcast', function(obj){
+          $('#shower_'+room_id).text($('#shower_'+room_id).text() + ' ' + obj.message);
+        });
+      }).call(this);
+    </script>
+  <% end %>
+</div>
+
+<footer>
+  <p><a href="https://github.com/kinoppix/shower">Shower Repository</a></p>
+</footer>

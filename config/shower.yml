@@ -1,0 +1,9 @@
+development:
+  url: http://shower-server:2525/
+  api_in: http://localhost:8080/
+test:
+  url: http://localhost:2525/
+  api_in: http://localhost:8080/
+production:
+  url: http://shower-server:2525/
+  api_in: http://localhost:8080/

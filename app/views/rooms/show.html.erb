@@ -1,0 +1,28 @@
+<h1><small><%= @room.name %></small></h1>
+<pre><%= @room.description %></pre>
+<p id="notice"><%= notice %></p>
+<div class="span12">
+  <div class="row">
+    <div class="span">
+      <%= image_tag src=@room.image_url, :size=>"500x300" %>
+      <div id="comment_view"></div>
+    </div>
+    <div class="span" style="">
+      <pre id="box" class="box"><div id="tail" class="tail"></div></pre>
+      <%= render 'messages/form' %>
+    </div>
+  </div>
+
+<footer>
+  <p>Shower</p>
+</footer>
+
+
+<%= link_to 'Edit', edit_room_path(@room) %> |
+<%= link_to 'Rooms', rooms_path %>
+
+<script>
+    var room_id = '<%= @room.id %>';
+    Application.listen(room_id, '#tail');
+    $(document).ready(Application.room_ready);
+</script>
