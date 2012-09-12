@@ -17,15 +17,16 @@ Getting Started
 ### 2. Configure and install
 	cd shiritori
 	vi config/shower.yml
+	RAILS_ENV=production
 	bundle install
 	rake db:create
 	rake db:migrate
 	rails r 'Message.install_shower'
 
 ### 3. Start server
-	rails server &
+	rails server -e production &
 or if you want to listen on port 80;
-	rvmsudo rails server -p 80 &
+	rvmsudo rails server -e production -p 80 &
 
 ### 4. Go to http://localhost/ , create rooms and comment with each other.
 

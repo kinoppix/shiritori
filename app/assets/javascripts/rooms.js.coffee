@@ -5,8 +5,6 @@
 window.Application ||= {}
 Application.room_ready = ->
   $('#new_message').bind 'ajax:beforeSend', (event) ->
-    # console.log $('#message_comment').val()
-    # $('#message_comment').val($('#message_comment').val()+'=')
     $('#message_comment').val('')
 
   $('#new_message').bind 'ajax:failure', ->
